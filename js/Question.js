@@ -12,16 +12,21 @@ export class Question{
         this.Category=category;
     }
     checkAnswer(event){
+        var quiz=newQuiz;
         if(!this.isAnswered){
             this.userAnwer=event.target.innerHTML;
         
             if(this.userAnwer.toLowerCase() == this.correctAnswer.toLowerCase()){
-                event.target.classList.add("bg-success");
+                event.target.classList.add("bg-success","animate__animated","animate__shakeY");
+                quiz.grade +=this.mark;
+                document.querySelector("div.bg-secondary").classList.replace("bg-secondary","bg-success");
             }else{
-                event.target.classList.add("bg-danger");
+                event.target.classList.add("bg-danger","animate__animated","animate__shakeX");
+                document.querySelector("div.bg-secondary").classList.replace("bg-secondary","bg-danger");
             }
             this.isAnswered=true;
-            var quiz=newQuiz;
+            
+           
             setTimeout(function(){
                 quiz.nextQuestion()
             },1000);
@@ -30,7 +35,7 @@ export class Question{
         }
        
     }
-   displayQuestion(index ,Difficulity,numOfQuestions){
+   displayQuestion(index ,Difficulity,numOfQuestions,grade= 0 ){
         
         var box=
         `
@@ -54,7 +59,7 @@ export class Question{
                 </div>
             </div>
             <div>
-               <h4 class="text-center">Grade : 0</h4>
+               <h4 class="text-center">Grade : ${grade}</h4>
             </div>
         </div>
         `;
